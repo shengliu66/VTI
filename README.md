@@ -65,15 +65,15 @@ add_vti_layers(model.model.vision_tower.vision_tower.vision_model, torch.stack([
 ### MMHal-Bench [Download](https://llava-rlhf.github.io/)
 ```
 python ./experiments/eval/run_mmhal_vti.py \
-	    --alpha_image 0.9 \
-		--alpha_text 0.9 \
-		--seed 42 \
-		--image-folder dir/to/COCO/val2014/ \
-		--data-file dir/to/COCO/ \
-		--answers-file ./results/MMHal_answer.jsonl \
-		--num_demos 70 \
-		--mask_ratio 0.99 \
-		--num_trials 50 
+    --alpha_image 0.9 \
+	--alpha_text 0.9 \
+	--seed 42 \
+	--image-folder dir/to/COCO/val2014/ \
+	--data-file dir/to/COCO/ \
+	--answers-file ./results/MMHal_answer.jsonl \
+	--num_demos 70 \
+	--mask_ratio 0.99 \
+	--num_trials 50 
 ```
 
 To evaluate

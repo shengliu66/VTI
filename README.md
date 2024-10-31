@@ -35,14 +35,20 @@ The following evaluation requires for MSCOCO 2014 dataset (for computing the VTI
 ### How to Use VTI in LVLMs
 There are two core functions of VTI, computing the VTI directions and adding the directions to the LVLM.
 1. Compute the VTI visual and textual directions for a LVLM model
+data to compute VTI visual and textual directions
 ```
 input_images, input_ids = get_demos(args, image_processor, model, tokenizer)
+
+```
+compute VTI visual direction
+```
 vti_vision, _ = obtain_visual_vti(
 			model, input_images, rank=1
 			)
 
 visual_direction = vti_vision[1:]
 ```
+compute VTI textual direction
 ```
 vti_text, _ = obtain_textual_vti(
 			model, input_ids, input_images, rank=1

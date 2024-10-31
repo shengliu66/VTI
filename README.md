@@ -1,7 +1,3 @@
-<script type="text/javascript" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
-
 <div align="center">   
   
 # Reducing Hallucinations in Vision-Language Models via Latent Space Steering
@@ -20,7 +16,7 @@ Hallucination poses a challenge to the deployment of large vision-language model
 <img src="images/vti_overview.png" width="800" /> 
 <figcaption align="center">
 Overview of the proposed algorithm visual and textual test-time intervention (VTI). Given an example set 
-\(\{(v_i, x_i, \tilde{x}_i)\}_{i=1}^N\) where \(v_i\) is the vision input and \((x_i,\tilde{x}_i)\) is paired captions with and without hallucination, VTI first runs the model on each query \((v_i, x_i, \tilde{x}_i)\) and records all hidden states. It then computes the shifting vectors \(d_{l,t}^\text{vision}\) and \(d_{l,t}^\text{text}\) for all layer \(l\) and token \(t\) according to the method section in the paper. During inference, the vectors are subsequently added to every layer of the vision encoder and text decoder, respectively, when processing a new query. Notice that the vectors are task- and dataset-agnostic, i.e., they are pre-computed using a few samples from one specific task and dataset, and fixed unchanged throughout the entire experiments in our paper.
+{(vᵢ, xᵢ, x̅ᵢ)} where vᵢ is the vision input and (xᵢ, x̅ᵢ) is paired captions with and without hallucination, VTI first runs the model on each query (vᵢ, xᵢ, x̅ᵢ) and records all hidden states. It then computes the shifting vectors dₗ,ₜᵛⁱˢⁱᵒⁿ and dₗ,ₜᵗᵉˣᵗ for all layer l and token t according to the method section in the paper. During inference, the vectors are subsequently added to every layer of the vision encoder and text decoder, respectively, when processing a new query. Notice that the vectors are task- and dataset-agnostic, i.e., they are pre-computed using a few samples from one specific task and dataset, and fixed unchanged throughout the entire experiments in our paper.
 </figcaption>
 </p>
 

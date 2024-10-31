@@ -38,15 +38,15 @@ There are two core functions of VTI, computing the VTI directions and adding the
 ```
 input_images, input_ids = get_demos(args, image_processor, model, tokenizer)
 vti_vision, _ = obtain_visual_vti(
-            model, input_images, rank=1
-            )
+			model, input_images, rank=1
+			)
 
 visual_direction = vti_vision[1:]
 ```
 ```
 vti_text, _ = obtain_textual_vti(
-            model, input_ids, input_images, rank=1
-            )
+			model, input_ids, input_images, rank=1
+			)
 textual_direction = vti_text[1:]
 ```
 
@@ -65,7 +65,7 @@ add_vti_layers(model.model.vision_tower.vision_tower.vision_model, torch.stack([
 ### MMHal-Bench [Download](https://llava-rlhf.github.io/)
 ```
 python ./experiments/eval/run_mmhal_vti.py \
-    --alpha_image 0.9 \
+	--alpha_image 0.9 \
 	--alpha_text 0.9 \
 	--seed 42 \
 	--image-folder dir/to/COCO/val2014/ \

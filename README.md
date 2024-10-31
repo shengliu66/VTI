@@ -1,3 +1,7 @@
+<script type="text/javascript" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
 <div align="center">   
   
 # Reducing Hallucinations in Vision-Language Models via Latent Space Steering
@@ -15,9 +19,8 @@ Hallucination poses a challenge to the deployment of large vision-language model
 <p float="left" align="center">
 <img src="images/vti_overview.png" width="800" /> 
 <figcaption align="center">
-```math
-Overview of the proposed algorithm visual and textual test-time intervention (VTI). Given an example set $$\{(v_i, x_i, \tilde{x}_i)\}_{i=1}^N$$ where $$v_i$$ is the vision input and $$(x_i,\tilde x_i)$$ is paired captions with and without hallucination, VTI first runs the model on each query $$(v_i, x_i, \tilde{x}_i)$$ and records all hidden states. It then computes the shifting vectors $$d_{l,t}^\text{vision}$$ and $$d_{l,t}^\text{text}$$ for all layer $l$ and token $$t$$ according to the method ssection in the paper. During inference, the vectors are subsequently added to every layer of the vision encoder and text decoder, respectively, when processing a new query. Notice that the vectors are task- and dataset-agnostic, i.e., they are pre-computed using a few samples from one specific task and dataset, and fixed unchanged throughout the entire experiments in our paper.
-```
+Overview of the proposed algorithm visual and textual test-time intervention (VTI). Given an example set 
+\(\{(v_i, x_i, \tilde{x}_i)\}_{i=1}^N\) where \(v_i\) is the vision input and \((x_i,\tilde{x}_i)\) is paired captions with and without hallucination, VTI first runs the model on each query \((v_i, x_i, \tilde{x}_i)\) and records all hidden states. It then computes the shifting vectors \(d_{l,t}^\text{vision}\) and \(d_{l,t}^\text{text}\) for all layer \(l\) and token \(t\) according to the method section in the paper. During inference, the vectors are subsequently added to every layer of the vision encoder and text decoder, respectively, when processing a new query. Notice that the vectors are task- and dataset-agnostic, i.e., they are pre-computed using a few samples from one specific task and dataset, and fixed unchanged throughout the entire experiments in our paper.
 </figcaption>
 </p>
 
@@ -32,6 +35,36 @@ pip install -r requirements.txt
 
 ### Data
 The following evaluation requires for MSCOCO 2014 dataset (for computing the VTI directions as well as evaluation). Please download [here](https://cocodataset.org/#home) and extract it in your data path.
+
+### How to Use VTI in LVLMs
+There are two core functions of VTI, computing the VTI directions and adding the directions to the LVLM.
+1. Compute the VTI visual and textual directions for a LVLM model
+```
+input_images, input_ids = get_demos(args, image_processor, model, tokenizer)
+vti_vision, _ = obtain_visual_vti(
+            model, input_images, rank=1
+            )
+
+        visual_direction = vti_vision[1:]
+```
+```
+vti_text, _ = obtain_textual_vti(
+            model, input_ids, input_images, rank=1
+            )
+textual_direction = vti_text[1:]
+```
+
+2. Add the directions to the LVLM
+```
+add_vti_layers(model, torch.stack([textual_direction],dim=1).cuda(), alpha = [args.alpha_text])
+```
+Note that you need to specify the vision encoder of the model to add the visual direction
+
+```
+add_vti_layers(model.model.vision_tower.vision_tower.vision_model, torch.stack([visual_direction],dim=1).cuda(), alpha = [args.alpha_image])
+```
+
+## 🏅 Experiments
 
 ### MMHal-Bench [Download](https://llava-rlhf.github.io/)
 ```
@@ -57,7 +90,7 @@ python experiments/eval/eval_mmhal.py \
 ### CHAIR
 To be updated
 
-### Citation
+### 📝 Citation
 
 If you find our code or models useful in your work, please cite [our paper](https://arxiv.org/abs/2410.11087):
 

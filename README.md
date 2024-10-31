@@ -41,7 +41,7 @@ vti_vision, _ = obtain_visual_vti(
             model, input_images, rank=1
             )
 
-        visual_direction = vti_vision[1:]
+visual_direction = vti_vision[1:]
 ```
 ```
 vti_text, _ = obtain_textual_vti(

@@ -35,12 +35,12 @@ The following evaluation requires for MSCOCO 2014 dataset (for computing the VTI
 ### How to Use VTI in LVLMs
 There are two core functions of VTI, computing the VTI directions and adding the directions to the LVLM.
 1. Compute the VTI visual and textual directions for a LVLM model
-data to compute VTI visual and textual directions
+
+- data to compute VTI visual and textual directions
 ```
 input_images, input_ids = get_demos(args, image_processor, model, tokenizer)
-
 ```
-compute VTI visual direction
+- compute VTI visual direction
 ```
 vti_vision, _ = obtain_visual_vti(
 			model, input_images, rank=1
@@ -48,7 +48,7 @@ vti_vision, _ = obtain_visual_vti(
 
 visual_direction = vti_vision[1:]
 ```
-compute VTI textual direction
+- compute VTI textual direction
 ```
 vti_text, _ = obtain_textual_vti(
 			model, input_ids, input_images, rank=1
@@ -60,7 +60,7 @@ textual_direction = vti_text[1:]
 ```
 add_vti_layers(model, torch.stack([textual_direction],dim=1).cuda(), alpha = [args.alpha_text])
 ```
-Note that you need to specify the vision encoder of the model to add the visual direction
+- Note that you need to specify the vision encoder of the model to add the visual direction
 
 ```
 add_vti_layers(model.model.vision_tower.vision_tower.vision_model, torch.stack([visual_direction],dim=1).cuda(), alpha = [args.alpha_image])
@@ -69,6 +69,7 @@ add_vti_layers(model.model.vision_tower.vision_tower.vision_model, torch.stack([
 ## 🏅 Experiments
 
 ### MMHal-Bench [Download](https://llava-rlhf.github.io/)
+- Run experiments
 ```
 python ./experiments/eval/run_mmhal_vti.py \
 	--alpha_image 0.9 \
@@ -82,7 +83,7 @@ python ./experiments/eval/run_mmhal_vti.py \
 	--num_trials 50 
 ```
 
-To evaluate
+- To evaluate
 ```
 python experiments/eval/eval_mmhal.py \
 	--response ./results/MMHal_answer.jsonl \

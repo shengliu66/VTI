@@ -16,7 +16,7 @@ from llava.mm_utils import tokenizer_image_token, get_model_name_from_path, Keyw
 from PIL import Image
 from transformers import set_seed
 
-from vti_utils.icv_utils import get_demos, obtain_textual_vti, obtain_visual_vti
+from vti_utils.utils import get_demos, obtain_textual_vti, obtain_visual_vti
 from vti_utils.llm_layers import add_vti_layers, remove_vti_layers
 
 from datasets import load_dataset
@@ -62,7 +62,7 @@ def eval_model(args):
             model, input_images, rank=1
             )
 
-        visual_direction = vti_vision[:-1]
+        visual_direction = vti_vision[1:]
 
     if args.alpha_image != 0:
         add_vti_layers(model.model.vision_tower.vision_tower.vision_model, torch.stack([visual_direction],dim=1).cuda(), alpha = [args.alpha_image])

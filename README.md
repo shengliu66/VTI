@@ -13,7 +13,7 @@ Hallucination poses a challenge to the deployment of large vision-language model
 <p float="left" align="center">
 <img src="images/vti_overview.png" width="800" /> 
 <figcaption align="center">
-Overview of the proposed algorithm visual and textual test-time intervention (VTI). Given an example set $\{(v_i, x_i, \tilde{x}_i)\}_{i=1}^N$ where $v_i$ is the vision input and $(x_i,\tilde x_i)$ is paired captions with and without hallucination, VTI first runs the model on each query $(v_i, x_i, \tilde{x}_i)$ and records all hidden states. It then computes the shifting vectors $d_{l,t}^\text{vision}$ and $d_{l,t}^\text{text}$ for all layer $l$ and token $t$ according to the method ssection in the paper. During inference, the vectors are subsequently added to every layer of the vision encoder and text decoder, respectively, when processing a new query. Notice that the vectors are task- and dataset-agnostic, i.e., they are pre-computed using a few samples from one specific task and dataset, and fixed unchanged throughout the entire experiments in our paper.
+Overview of the proposed algorithm visual and textual test-time intervention (VTI). Given an example set $$\{(v_i, x_i, \tilde{x}_i)\}_{i=1}^N$$ where $$v_i$$ is the vision input and $$(x_i,\tilde x_i)$$ is paired captions with and without hallucination, VTI first runs the model on each query $$(v_i, x_i, \tilde{x}_i)$$ and records all hidden states. It then computes the shifting vectors $$d_{l,t}^\text{vision}$$ and $$d_{l,t}^\text{text}$$ for all layer $l$ and token $$t$$ according to the method ssection in the paper. During inference, the vectors are subsequently added to every layer of the vision encoder and text decoder, respectively, when processing a new query. Notice that the vectors are task- and dataset-agnostic, i.e., they are pre-computed using a few samples from one specific task and dataset, and fixed unchanged throughout the entire experiments in our paper.
 </figcaption>
 </p>
 
@@ -22,7 +22,7 @@ Overview of the proposed algorithm visual and textual test-time intervention (VT
 ### Data
 The following evaluation requires for MSCOCO 2014 dataset (for computing the VTI directions as well as evaluation). Please download [here](https://cocodataset.org/#home) and extract it in your data path.
 
-### MMHal-Bench [Link](https://llava-rlhf.github.io/)
+### MMHal-Bench [Download](https://llava-rlhf.github.io/)
 ```
 python ./experiments/eval/run_mmhal_vti.py \
 	    --alpha_image 0.9 \

@@ -95,7 +95,7 @@ To be updated
 
 ### 📝 Citation
 
-If you find our code or models useful in your work, please cite [our paper](https://arxiv.org/abs/2410.11087):
+If you find our code or models useful in your work, please cite [our paper](https://arxiv.org/abs/2410.15778):
 
 ```bibtex
 @article{liu2024reducing,

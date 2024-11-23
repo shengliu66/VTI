@@ -177,34 +177,34 @@ if __name__ == '__main__':
             responses.append(response.choices[0].message.content)
             time.sleep(1)
 
-            # save responses
-            if args.evaluation is not None:
-                with open(args.evaluation, 'w') as f:
-                    json.dump(responses, f, indent=2)
+    # save responses
+    if args.evaluation is not None:
+        with open(args.evaluation, 'w') as f:
+            json.dump(responses, f, indent=2)
 
-            # analyze responses
-            scores = []
-            for i, response in enumerate(responses):
-                # response = response['choices'][0]['message']['content']
-                scores_found = []
-                for s in range(7):
-                    if f'rating: {s}' in response.lower() or f'**rating**: {s}' in response.lower():
-                        scores_found.append(s)
-                if len(scores_found) == 1:
-                    scores.append(scores_found[0])
-                else:
-                    print('Warning: multiple or zero scores found')
-                    print(i, response)
-                    scores.append(0)
+    # analyze responses
+    scores = []
+    for i, response in enumerate(responses):
+        # response = response['choices'][0]['message']['content']
+        scores_found = []
+        for s in range(7):
+            if f'rating: {s}' in response.lower() or f'**rating**: {s}' in response.lower():
+                scores_found.append(s)
+        if len(scores_found) == 1:
+            scores.append(scores_found[0])
+        else:
+            print('Warning: multiple or zero scores found')
+            print(i, response)
+            scores.append(0)
 
-            hallucination = []
-            for s in scores:
-                if s >= 3:
-                    hallucination.append(0)
-                else:
-                    hallucination.append(1)
+    hallucination = []
+    for s in scores:
+        if s >= 3:
+            hallucination.append(0)
+        else:
+            hallucination.append(1)
 
-            scores_each = [[] for _ in range(8)]
+    scores_each = [[] for _ in range(8)]
             # assuming order of 96 questions is not changed
     if len(args.response_original) <= 1:
         for i in range(96):
@@ -218,8 +218,8 @@ if __name__ == '__main__':
         for i in range(8):
             result_dict['Hallucination rate ' + str(i)] = round(sum(scores_each[i]) / len(scores_each[i]), 2)
 
-        print('Average score: {:.2f}'.format(sum(scores) / len(scores)))
-        print('Hallucination rate: {:.2f}'.format(sum(hallucination) / len(hallucination)))
+        print('Average score: {:.5f}'.format(sum(scores) / len(scores)))
+        print('Hallucination rate: {:.5f}'.format(sum(hallucination) / len(hallucination)))
         print('Average score for each question type:', ','.join([str(round(sum(scores_each[i]) / len(scores_each[i]), 2)) for i in range(8)]), flush=True)
 
         
